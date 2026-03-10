@@ -1,20 +1,35 @@
-# LoopMart Prototype
+# LoopMart Prototype (Frontend + Backend)
 
-This is a finished front-end prototype for a second-hand goods marketplace similar to Xianyu.
+This project is now a full-stack demo for a second-hand marketplace.
 
-## Open locally
+## Run locally
 
-Open [index.html](./index.html) in a browser.
+```bash
+npm install
+npm start
+```
+
+Then open:
+- User site: [http://localhost:3000/index.html](http://localhost:3000/index.html)
+- Admin console: [http://localhost:3000/admin](http://localhost:3000/admin)
+
+## Default admin account
+
+- Email: `admin@loopmart.com`
+- Password: `admin123456`
 
 ## Included interactions
 
 - Search listings
 - Filter by category
 - Sort by latest or price
-- Publish a demo listing locally in the page state
+- Register / login / logout via backend API
+- Publish listing to backend storage
+- Admin backend login and overview dashboard
+- English / 中文 language switch
 
-## Files
+## Main files
 
-- `index.html`
-- `styles.css`
-- `script.js`
+- `index.html` / `script.js` / `styles.css`
+- `server.js` / `db.json`
+- `admin.html` / `admin.js` / `admin.css`

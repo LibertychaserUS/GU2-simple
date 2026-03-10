@@ -30,6 +30,7 @@
           </select>
           <span id="authStatus" class="auth-status" data-i18n="guestStatus">Guest mode</span>
           <button id="openAuthModal" class="ghost-button" data-i18n="signIn">Sign In</button>
+          <a id="adminPortalLink" class="ghost-button" href="/admin" target="_blank" hidden data-i18n="adminPortal">Admin</a>
           <button id="logoutButton" class="ghost-button" hidden data-i18n="logout">Log out</button>
         </div>
       </header>
@@ -156,11 +157,11 @@
                 <label>
                   <span data-i18n="fieldCategory">Category</span>
                   <select name="category">
-                    <option data-i18n="catElectronics">Electronics</option>
-                    <option data-i18n="catFurniture">Furniture</option>
-                    <option data-i18n="catBooks">Books</option>
-                    <option data-i18n="catFashion">Fashion</option>
-                    <option data-i18n="catSports">Sports</option>
+                    <option value="Electronics" data-i18n="catElectronics">Electronics</option>
+                    <option value="Furniture" data-i18n="catFurniture">Furniture</option>
+                    <option value="Books" data-i18n="catBooks">Books</option>
+                    <option value="Fashion" data-i18n="catFashion">Fashion</option>
+                    <option value="Sports" data-i18n="catSports">Sports</option>
                   </select>
                 </label>
                 <label>
@@ -230,7 +231,7 @@
       <form method="dialog" class="auth-modal-shell" id="authFormShell">
         <div class="auth-header">
           <h3 id="authTitle" data-i18n="authTitleLogin">Sign in to LoopMart</h3>
-          <button class="ghost-button small" id="closeAuthModal" data-i18n="close">Close</button>
+          <button type="button" class="ghost-button small" id="closeAuthModal" data-i18n="close">Close</button>
         </div>
         <label>
           <span data-i18n="authEmail">Email</span>

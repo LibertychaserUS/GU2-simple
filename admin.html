@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LoopMart Admin Console</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./admin.css" />
+  </head>
+  <body>
+    <main class="admin-shell">
+      <header class="admin-header">
+        <h1>LoopMart Admin Console</h1>
+        <p>管理员后台登录与数据管理面板</p>
+      </header>
+
+      <section class="admin-card" id="adminLoginCard">
+        <h2>Admin Login</h2>
+        <label>Email <input id="adminEmail" type="email" value="admin@loopmart.com" /></label>
+        <label>Password <input id="adminPassword" type="password" value="admin123456" /></label>
+        <button id="adminLoginBtn" class="primary-button">Login to Admin</button>
+        <p id="adminFeedback" class="form-feedback"></p>
+      </section>
+
+      <section class="admin-card" id="adminPanel" hidden>
+        <div class="admin-toolbar">
+          <h2>Dashboard</h2>
+          <button id="adminLogoutBtn" class="ghost-button">Logout</button>
+        </div>
+        <div id="adminSummary" class="admin-summary"></div>
+        <h3>Users</h3>
+        <pre id="adminUsers" class="admin-pre"></pre>
+        <h3>Listings</h3>
+        <pre id="adminListings" class="admin-pre"></pre>
+      </section>
+    </main>
+
+    <script src="./admin.js"></script>
+  </body>
+</html>

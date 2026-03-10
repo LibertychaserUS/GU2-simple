@@ -1,0 +1,8 @@
+.admin-shell { max-width: 980px; margin: 24px auto; padding: 0 12px; }
+.admin-header h1 { margin-bottom: 8px; }
+.admin-card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 16px; margin-bottom: 16px; }
+.admin-card label { display:block; margin: 10px 0; }
+.admin-toolbar { display:flex; justify-content:space-between; align-items:center; }
+.admin-summary { display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; margin: 12px 0 16px; }
+.admin-summary article { background: #fffaf1; border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
+.admin-pre { white-space: pre-wrap; background: #0f172a; color: #e2e8f0; border-radius: 12px; padding: 12px; overflow: auto; max-height: 280px; }

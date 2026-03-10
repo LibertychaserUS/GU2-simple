@@ -1,7 +1,15 @@
 const STORAGE_KEYS = {
-  users: "loopmart_users",
-  currentUser: "loopmart_current_user",
   language: "loopmart_language",
+  token: "loopmart_token",
+  user: "loopmart_user",
+};
+
+const API = {
+  register: "/api/auth/register",
+  login: "/api/auth/login",
+  logout: "/api/auth/logout",
+  me: "/api/auth/me",
+  listings: "/api/listings",
 };
 
 const translations = {
@@ -15,6 +23,7 @@ const translations = {
     guestStatus: "Guest mode",
     signIn: "Sign In",
     logout: "Log out",
+    adminPortal: "Admin",
     heroEyebrow: "Campus and local resale prototype",
     heroTitle: "Buy and sell second-hand items with less friction.",
     heroText:
@@ -79,7 +88,7 @@ const translations = {
     faq1Q: "Do I need a real account?",
     faq1A: "No. Registration and login are local demo features stored in this browser only.",
     faq2Q: "Will listings be uploaded to server?",
-    faq2A: "No. Demo listings are stored only in memory and reset on page refresh.",
+    faq2A: "No. Listings are now stored by the LoopMart backend on this server.",
     faq3Q: "How does language switching work?",
     faq3A: "Use the language switcher in the top bar to toggle between English and Chinese instantly.",
     footerText: "LoopMart prototype · Built for interaction demo and architecture showcase.",
@@ -99,11 +108,10 @@ const translations = {
     authInvalidCredentials: "Invalid credentials. Please try again.",
     authSignedOut: "You have signed out.",
     publishInvalid: "Please complete all fields with valid values.",
-    publishSuccess: "Demo listing published successfully.",
+    publishNeedLogin: "Please sign in before publishing a listing.",
+    publishSuccess: "Listing published and saved to backend.",
     noListingsTitle: "No listings found",
     noListingsText: "Try another keyword or switch back to a broader category.",
-    sellerYou: "You • Newly listed",
-    timeJustNow: "Just now",
     viewButton: "View",
     catAll: "All",
     catElectronics: "Electronics",
@@ -122,9 +130,10 @@ const translations = {
     guestStatus: "游客模式",
     signIn: "登录",
     logout: "退出登录",
+    adminPortal: "后台",
     heroEyebrow: "校园与本地二手交易原型",
     heroTitle: "更顺滑地完成二手买卖。",
-    heroText: "这是一个类似闲鱼的完整前端原型，支持浏览、筛选、查看卖家信号并模拟发布商品。",
+    heroText: "这是一个类似闲鱼的完整前后端原型，支持浏览、筛选、发布、登录与后台管理。",
     heroActionExplore: "查看商品",
     heroActionPublish: "发布演示商品",
     statListings: "在售商品",
@@ -144,7 +153,7 @@ const translations = {
     feature2Title: "交易保障优先",
     feature2Text: "卖家标识与见面建议，帮助降低交易风险。",
     feature3Title: "快速发布",
-    feature3Text: "几秒发布演示商品，并即时出现在列表中。",
+    feature3Text: "几秒发布商品，并立即写入后端。",
     searchLabel: "搜索商品",
     searchPlaceholder: "搜索笔记本、书桌、自行车...",
     sortLabel: "排序方式",
@@ -179,9 +188,9 @@ const translations = {
     faqEyebrow: "帮助中心",
     faqTitle: "常见问题",
     faq1Q: "需要真实账号吗？",
-    faq1A: "不需要。注册和登录是本地演示功能，仅保存在当前浏览器。",
+    faq1A: "不需要。注册和登录是本地演示流程，但数据由后端接口处理。",
     faq2Q: "商品会上传到服务器吗？",
-    faq2A: "不会。演示发布的数据只在内存中，刷新页面会重置。",
+    faq2A: "会。发布的商品会保存到当前项目后端的 db.json 中。",
     faq3Q: "如何切换语言？",
     faq3A: "使用顶部导航栏的语言切换器，可实时切换中英文。",
     footerText: "LoopMart 原型 · 用于交互演示与架构展示。",
@@ -201,11 +210,10 @@ const translations = {
     authInvalidCredentials: "账号或密码错误，请重试。",
     authSignedOut: "你已退出登录。",
     publishInvalid: "请完整填写并确保输入内容有效。",
-    publishSuccess: "演示商品发布成功。",
+    publishNeedLogin: "请先登录再发布商品。",
+    publishSuccess: "发布成功，已写入后端。",
     noListingsTitle: "未找到商品",
     noListingsText: "试试其他关键词，或切换到更宽泛的分类。",
-    sellerYou: "你 · 刚刚发布",
-    timeJustNow: "刚刚",
     viewButton: "查看",
     catAll: "全部",
     catElectronics: "电子产品",
@@ -216,84 +224,13 @@ const translations = {
   },
 };
 
-const baseListings = [
-  {
-    title: { en: "iPhone 13 128GB", zh: "iPhone 13 128GB" },
-    category: "Electronics",
-    price: 2350,
-    seller: { en: "Mia Chen • Verified Student", zh: "Mia Chen • 学生认证" },
-    time: { en: "1 hour ago", zh: "1小时前" },
-    description: {
-      en: "No repairs, 90% battery health, includes original cable and case.",
-      zh: "无拆修，电池健康 90%，含原装数据线和保护壳。",
-    },
-  },
-  {
-    title: { en: "Solid Wood Study Desk", zh: "实木学习桌" },
-    category: "Furniture",
-    price: 260,
-    seller: { en: "Jun Li • Dorm Zone A", zh: "Jun Li • A区宿舍" },
-    time: { en: "3 hours ago", zh: "3小时前" },
-    description: {
-      en: "Wide desktop, stable legs, ideal for dorm study setup. Pickup only.",
-      zh: "桌面宽、结构稳，适合宿舍学习；仅支持自提。",
-    },
-  },
-  {
-    title: { en: "Data Structures Textbook", zh: "数据结构教材" },
-    category: "Books",
-    price: 45,
-    seller: { en: "Tina Xu • Fast Reply", zh: "Tina Xu • 回复快" },
-    time: { en: "Today", zh: "今天" },
-    description: {
-      en: "Highlighted lightly in pencil. Good for second-year computer science.",
-      zh: "有少量铅笔标注，适合计算机专业大二课程。",
-    },
-  },
-  {
-    title: { en: "Nike Running Shoes", zh: "Nike 跑鞋" },
-    category: "Fashion",
-    price: 180,
-    seller: { en: "Ryan Wu • Trusted Seller", zh: "Ryan Wu • 可信卖家" },
-    time: { en: "Yesterday", zh: "昨天" },
-    description: {
-      en: "Size 42, worn twice, clean sole, suitable for everyday running.",
-      zh: "42码，仅穿两次，鞋底干净，适合日常跑步。",
-    },
-  },
-  {
-    title: { en: "Yonex Badminton Racket", zh: "YONEX 羽毛球拍" },
-    category: "Sports",
-    price: 220,
-    seller: { en: "Ella Gao • Verified Student", zh: "Ella Gao • 学生认证" },
-    time: { en: "2 days ago", zh: "2天前" },
-    description: {
-      en: "Fresh grip tape, frame in great shape, includes protective bag.",
-      zh: "新缠手胶，拍框状态良好，含保护拍套。",
-    },
-  },
-  {
-    title: { en: "Dell 24-inch Monitor", zh: "Dell 24英寸显示器" },
-    category: "Electronics",
-    price: 420,
-    seller: { en: "Leo Fang • Same-day meetup", zh: "Leo Fang • 当天可交易" },
-    time: { en: "2 hours ago", zh: "2小时前" },
-    description: {
-      en: "1080p display, HDMI cable included, no dead pixels.",
-      zh: "1080p 屏幕，含 HDMI 线，无坏点。",
-    },
-  },
+const defaultListings = [
+  { title: "iPhone 13 128GB", category: "Electronics", price: 2350, seller: "Mia Chen", time: "2026-03-10T00:00:00.000Z", description: "No repairs, 90% battery health." },
+  { title: "Solid Wood Study Desk", category: "Furniture", price: 260, seller: "Jun Li", time: "2026-03-09T00:00:00.000Z", description: "Wide desktop, stable legs, pickup only." },
+  { title: "Data Structures Textbook", category: "Books", price: 45, seller: "Tina Xu", time: "2026-03-08T00:00:00.000Z", description: "Light pencil marks, good for CS students." },
 ];
 
-const categoryKeyMap = {
-  All: "catAll",
-  Electronics: "catElectronics",
-  Furniture: "catFurniture",
-  Books: "catBooks",
-  Fashion: "catFashion",
-  Sports: "catSports",
-};
-
+const categoryKeyMap = { All: "catAll", Electronics: "catElectronics", Furniture: "catFurniture", Books: "catBooks", Fashion: "catFashion", Sports: "catSports" };
 const categoryOrder = ["All", "Electronics", "Furniture", "Books", "Fashion", "Sports"];
 
 const categoryChips = document.querySelector("#categoryChips");
@@ -315,111 +252,66 @@ const authPassword = document.querySelector("#authPassword");
 const authFeedback = document.querySelector("#authFeedback");
 const authStatus = document.querySelector("#authStatus");
 const logoutButton = document.querySelector("#logoutButton");
+const adminPortalLink = document.querySelector("#adminPortalLink");
 
 let activeCategory = "All";
-let dynamicListings = [...baseListings];
+let dynamicListings = [...defaultListings];
 let authMode = "login";
-
+let currentUser = null;
 const storedLanguage = localStorage.getItem(STORAGE_KEYS.language);
 let currentLanguage = storedLanguage && translations[storedLanguage] ? storedLanguage : "en";
 
-function t(key) {
-  return translations[currentLanguage][key] || translations.en[key] || key;
-}
+const t = (key) => translations[currentLanguage][key] || translations.en[key] || key;
 
 function isPageReady() {
-  const requiredElements = [
-    categoryChips,
-    listingGrid,
-    searchInput,
-    sortSelect,
-    template,
-    sellForm,
-    formFeedback,
-    languageSelect,
-    authModal,
-    openAuthModalButton,
-    closeAuthModalButton,
-    authModeToggle,
-    authSubmit,
-    authTitle,
-    authEmail,
-    authPassword,
-    authFeedback,
-    authStatus,
-    logoutButton,
-  ];
-
-  return requiredElements.every(Boolean);
+  return [categoryChips, listingGrid, searchInput, sortSelect, template, sellForm, formFeedback, languageSelect, authModal, openAuthModalButton, closeAuthModalButton, authModeToggle, authSubmit, authTitle, authEmail, authPassword, authFeedback, authStatus, logoutButton, adminPortalLink].every(Boolean);
 }
 
-function getFieldValue(formData, key) {
-  const value = formData.get(key);
-  return typeof value === "string" ? value.trim() : "";
+function authHeader() {
+  const token = localStorage.getItem(STORAGE_KEYS.token);
+  return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
-function getUsers() {
-  return JSON.parse(localStorage.getItem(STORAGE_KEYS.users) || "[]");
+async function api(path, options = {}) {
+  const response = await fetch(path, {
+    ...options,
+    headers: { "Content-Type": "application/json", ...(options.headers || {}), ...authHeader() },
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.message || "Request failed");
+  return data;
 }
 
-function saveUsers(users) {
-  localStorage.setItem(STORAGE_KEYS.users, JSON.stringify(users));
-}
-
-function getCurrentUser() {
-  return localStorage.getItem(STORAGE_KEYS.currentUser);
-}
-
-function setCurrentUser(email) {
-  localStorage.setItem(STORAGE_KEYS.currentUser, email);
-}
-
-function clearCurrentUser() {
-  localStorage.removeItem(STORAGE_KEYS.currentUser);
+function applyTranslations() {
+  document.documentElement.lang = currentLanguage;
+  document.querySelectorAll("[data-i18n]").forEach((node) => {
+    node.textContent = t(node.dataset.i18n);
+  });
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+    node.placeholder = t(node.dataset.i18nPlaceholder);
+  });
 }
 
 function localizeCategory(category) {
   return t(categoryKeyMap[category] || category);
 }
 
-function localizeListingText(value) {
-  if (!value) return "";
-  if (typeof value === "string") return value;
-  return value[currentLanguage] || value.en || "";
-}
-
-function applyTranslations() {
-  document.documentElement.lang = currentLanguage;
-  document.querySelectorAll("[data-i18n]").forEach((node) => {
-    const key = node.dataset.i18n;
-    node.textContent = t(key);
-  });
-
-  document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
-    const key = node.dataset.i18nPlaceholder;
-    node.placeholder = t(key);
-  });
-
-  authEmail.placeholder = currentLanguage === "zh" ? "you@example.com" : "you@example.com";
-  authPassword.placeholder = "******";
-}
-
 function renderAuthUI() {
-  const currentUser = getCurrentUser();
   if (currentUser) {
-    authStatus.textContent = `${currentUser}`;
+    authStatus.textContent = `${currentUser.email} (${currentUser.role})`;
     openAuthModalButton.hidden = true;
     logoutButton.hidden = false;
+    adminPortalLink.hidden = currentUser.role !== "admin";
   } else {
     authStatus.textContent = t("guestStatus");
     openAuthModalButton.hidden = false;
     logoutButton.hidden = true;
+    adminPortalLink.hidden = true;
   }
 }
 
 function renderCategoryChips() {
   categoryChips.innerHTML = "";
-
   categoryOrder.forEach((category) => {
     const button = document.createElement("button");
     button.type = "button";
@@ -434,34 +326,27 @@ function renderCategoryChips() {
   });
 }
 
+function formatTime(iso) {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return String(iso);
+  return d.toLocaleString(currentLanguage === "zh" ? "zh-CN" : "en-US", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
+}
+
 function getVisibleListings() {
   const term = searchInput.value.trim().toLowerCase();
   const sorted = [...dynamicListings].filter((listing) => {
-    const title = localizeListingText(listing.title).toLowerCase();
-    const description = localizeListingText(listing.description).toLowerCase();
-    const category = localizeCategory(listing.category).toLowerCase();
-
     const matchesCategory = activeCategory === "All" || listing.category === activeCategory;
-    const matchesTerm = !term || title.includes(term) || description.includes(term) || category.includes(term);
-
-    return matchesCategory && matchesTerm;
+    const hay = `${listing.title} ${listing.description} ${localizeCategory(listing.category)}`.toLowerCase();
+    return matchesCategory && (!term || hay.includes(term));
   });
-
-  const sortMode = sortSelect.value;
-
-  if (sortMode === "low") {
-    sorted.sort((a, b) => a.price - b.price);
-  } else if (sortMode === "high") {
-    sorted.sort((a, b) => b.price - a.price);
-  }
-
+  if (sortSelect.value === "low") sorted.sort((a, b) => a.price - b.price);
+  if (sortSelect.value === "high") sorted.sort((a, b) => b.price - a.price);
   return sorted;
 }
 
 function renderListings() {
   const visible = getVisibleListings();
   listingGrid.innerHTML = "";
-
   if (!visible.length) {
     const empty = document.createElement("div");
     empty.className = "listing-card";
@@ -469,59 +354,60 @@ function renderListings() {
     listingGrid.appendChild(empty);
     return;
   }
-
   visible.forEach((listing, index) => {
     const node = template.content.firstElementChild.cloneNode(true);
     node.style.animationDelay = `${index * 80}ms`;
     node.querySelector(".listing-category").textContent = localizeCategory(listing.category);
-    node.querySelector(".listing-time").textContent = localizeListingText(listing.time);
-    node.querySelector(".listing-title").textContent = localizeListingText(listing.title);
-    node.querySelector(".listing-description").textContent = localizeListingText(listing.description);
+    node.querySelector(".listing-time").textContent = formatTime(listing.time);
+    node.querySelector(".listing-title").textContent = listing.title;
+    node.querySelector(".listing-description").textContent = listing.description;
     node.querySelector(".listing-price").textContent = `¥${listing.price}`;
-    node.querySelector(".listing-seller").textContent = localizeListingText(listing.seller);
+    node.querySelector(".listing-seller").textContent = listing.seller;
     node.querySelector(".card-button").textContent = t("viewButton");
     listingGrid.appendChild(node);
   });
 }
 
-function handlePublish(event) {
+async function loadListings() {
+  try {
+    const { listings } = await api(API.listings, { method: "GET", headers: {} });
+    dynamicListings = listings.length ? listings : [...defaultListings];
+  } catch {
+    dynamicListings = [...defaultListings];
+  }
+  renderListings();
+}
+
+async function handlePublish(event) {
   event.preventDefault();
+  if (!currentUser) {
+    formFeedback.textContent = t("publishNeedLogin");
+    return;
+  }
+
   const formData = new FormData(sellForm);
-  const title = getFieldValue(formData, "title");
-  const price = Number(formData.get("price"));
-  const categoryLabel = getFieldValue(formData, "category");
-  const description = getFieldValue(formData, "description");
+  const payload = {
+    title: String(formData.get("title") || "").trim(),
+    category: String(formData.get("category") || "").trim(),
+    price: Number(formData.get("price")),
+    description: String(formData.get("description") || "").trim(),
+  };
 
-  const category = Object.keys(categoryKeyMap).find(
-    (key) => key !== "All" && localizeCategory(key) === categoryLabel,
-  );
-
-  if (!title || !description || Number.isNaN(price) || price <= 0 || !category) {
+  if (!payload.title || !payload.category || !payload.description || payload.price <= 0 || Number.isNaN(payload.price)) {
     formFeedback.textContent = t("publishInvalid");
     return;
   }
 
-  dynamicListings.unshift({
-    title: { [currentLanguage]: title, en: title, zh: title },
-    category,
-    price,
-    seller: { en: t("sellerYou"), zh: translations.zh.sellerYou },
-    time: { en: t("timeJustNow"), zh: translations.zh.timeJustNow },
-    description: { [currentLanguage]: description, en: description, zh: description },
-  });
-
-  activeCategory = "All";
-  sellForm.reset();
-  formFeedback.textContent = t("publishSuccess");
-  renderCategoryChips();
-  renderListings();
-}
-
-function openAuthModal() {
-  authFeedback.textContent = "";
-  authEmail.value = "";
-  authPassword.value = "";
-  authModal.showModal();
+  try {
+    await api(API.listings, { method: "POST", body: JSON.stringify(payload) });
+    formFeedback.textContent = t("publishSuccess");
+    sellForm.reset();
+    activeCategory = "All";
+    renderCategoryChips();
+    await loadListings();
+  } catch (error) {
+    formFeedback.textContent = error.message;
+  }
 }
 
 function syncAuthModeUI() {
@@ -536,45 +422,57 @@ function syncAuthModeUI() {
   }
 }
 
-function handleAuthSubmit() {
+function openAuthModal() {
+  authFeedback.textContent = "";
+  authEmail.value = "";
+  authPassword.value = "";
+  authModal.showModal();
+}
+
+async function handleAuthSubmit() {
   const email = authEmail.value.trim().toLowerCase();
   const password = authPassword.value;
-
   if (!email.includes("@") || password.length < 6) {
     authFeedback.textContent = t("authRequired");
     return;
   }
 
-  const users = getUsers();
-
-  if (authMode === "register") {
-    const exists = users.some((user) => user.email === email);
-    if (exists) {
-      authFeedback.textContent = t("authEmailExists");
-      return;
-    }
-
-    users.push({ email, password });
-    saveUsers(users);
-    setCurrentUser(email);
-    authFeedback.textContent = t("authRegisterSuccess");
-  } else {
-    const user = users.find((entry) => entry.email === email && entry.password === password);
-    if (!user) {
-      authFeedback.textContent = t("authInvalidCredentials");
-      return;
-    }
-
-    setCurrentUser(email);
-    authFeedback.textContent = t("authLoginSuccess");
+  try {
+    const endpoint = authMode === "login" ? API.login : API.register;
+    const data = await api(endpoint, { method: "POST", body: JSON.stringify({ email, password }) });
+    localStorage.setItem(STORAGE_KEYS.token, data.token);
+    localStorage.setItem(STORAGE_KEYS.user, JSON.stringify(data.user));
+    currentUser = data.user;
+    authFeedback.textContent = authMode === "login" ? t("authLoginSuccess") : t("authRegisterSuccess");
+    renderAuthUI();
+    setTimeout(() => authModal.close(), 400);
+  } catch (error) {
+    if (String(error.message).includes("exists")) authFeedback.textContent = t("authEmailExists");
+    else authFeedback.textContent = t("authInvalidCredentials");
   }
-
-  renderAuthUI();
-  setTimeout(() => authModal.close(), 450);
 }
 
-function handleLogout() {
-  clearCurrentUser();
+async function tryRestoreSession() {
+  const rawUser = localStorage.getItem(STORAGE_KEYS.user);
+  if (!rawUser || !localStorage.getItem(STORAGE_KEYS.token)) return;
+  try {
+    const data = await api(API.me, { method: "GET", headers: {} });
+    currentUser = data.user;
+  } catch {
+    localStorage.removeItem(STORAGE_KEYS.token);
+    localStorage.removeItem(STORAGE_KEYS.user);
+  }
+}
+
+async function handleLogout() {
+  try {
+    await api(API.logout, { method: "POST", body: "{}" });
+  } catch {
+    // ignore network errors during logout cleanup
+  }
+  localStorage.removeItem(STORAGE_KEYS.token);
+  localStorage.removeItem(STORAGE_KEYS.user);
+  currentUser = null;
   formFeedback.textContent = t("authSignedOut");
   renderAuthUI();
 }
@@ -589,17 +487,24 @@ function handleLanguageChange() {
   renderListings();
 }
 
-if (isPageReady()) {
+async function init() {
+  if (!isPageReady()) {
+    console.error("LoopMart initialization failed: required DOM nodes are missing.");
+    return;
+  }
+
   languageSelect.value = currentLanguage;
   applyTranslations();
   syncAuthModeUI();
+  await tryRestoreSession();
   renderAuthUI();
+  renderCategoryChips();
+  await loadListings();
 
   searchInput.addEventListener("input", renderListings);
   sortSelect.addEventListener("change", renderListings);
   sellForm.addEventListener("submit", handlePublish);
   languageSelect.addEventListener("change", handleLanguageChange);
-
   openAuthModalButton.addEventListener("click", openAuthModal);
   closeAuthModalButton.addEventListener("click", (event) => {
     event.preventDefault();
@@ -612,9 +517,6 @@ if (isPageReady()) {
   });
   authSubmit.addEventListener("click", handleAuthSubmit);
   logoutButton.addEventListener("click", handleLogout);
-
-  renderCategoryChips();
-  renderListings();
-} else {
-  console.error("LoopMart initialization failed: required DOM nodes are missing.");
 }
+
+init();

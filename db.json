@@ -1,0 +1,47 @@
+{
+  "users": [
+    {
+      "id": "u-admin",
+      "email": "admin@loopmart.com",
+      "passwordHash": "ac0e7d037817094e9e0b4441f9bae3209d67b02fa484917065f71b16109a1a78",
+      "role": "admin",
+      "createdAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "378f69d1-357f-41fb-9598-491ebf13cbe2",
+      "email": "user1@example.com",
+      "passwordHash": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+      "role": "user",
+      "createdAt": "2026-03-10T01:57:46.772Z"
+    },
+    {
+      "id": "b2c982c0-3a9f-4b63-9e9e-17a5a8a56d15",
+      "email": "newuser@example.com",
+      "passwordHash": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+      "role": "user",
+      "createdAt": "2026-03-10T01:58:04.791Z"
+    }
+  ],
+  "listings": [
+    {
+      "id": "04dbb594-2e84-4df5-b8c7-716cf395069f",
+      "title": "后端商品",
+      "category": "Electronics",
+      "price": 199,
+      "description": "后端发布测试",
+      "seller": "newuser@example.com",
+      "time": "2026-03-10T01:58:05.911Z",
+      "createdAt": "2026-03-10T01:58:05.911Z"
+    },
+    {
+      "id": "169d9ce6-7eaf-4daf-8162-d59450e2759a",
+      "title": "Test Bike",
+      "category": "Sports",
+      "price": 500,
+      "description": "good",
+      "seller": "user1@example.com",
+      "time": "2026-03-10T01:57:47.303Z",
+      "createdAt": "2026-03-10T01:57:47.303Z"
+    }
+  ]
+}
