@@ -13,43 +13,51 @@
           <span class="brand-mark">LM</span>
           <span class="brand-copy">
             <strong>LoopMart</strong>
-            <small>pre-owned goods, re-listed well</small>
+            <small data-i18n="brandTagline">pre-owned goods, re-listed well</small>
           </span>
         </a>
         <nav class="topnav">
-          <a href="#browse">Browse</a>
-          <a href="#sell">Sell</a>
-          <a href="#trust">Trust</a>
-          <a href="#report">Project Fit</a>
+          <a href="#browse" data-i18n="navBrowse">Browse</a>
+          <a href="#sell" data-i18n="navSell">Sell</a>
+          <a href="#trust" data-i18n="navTrust">Trust</a>
+          <a href="#report" data-i18n="navFit">Project Fit</a>
+          <a href="#faq" data-i18n="navFaq">FAQ</a>
         </nav>
-        <button class="ghost-button">Sign In</button>
+        <div class="topbar-actions">
+          <select id="languageSelect" class="language-select" aria-label="Language selector">
+            <option value="en">EN</option>
+            <option value="zh">中文</option>
+          </select>
+          <span id="authStatus" class="auth-status" data-i18n="guestStatus">Guest mode</span>
+          <button id="openAuthModal" class="ghost-button" data-i18n="signIn">Sign In</button>
+          <button id="logoutButton" class="ghost-button" hidden data-i18n="logout">Log out</button>
+        </div>
       </header>
 
       <main id="home">
         <section class="hero">
           <div class="hero-copy">
-            <p class="eyebrow">Campus and local resale prototype</p>
-            <h1>Buy and sell second-hand items with less friction.</h1>
-            <p class="hero-text">
-              A finished web prototype for a Xianyu-style marketplace. Users can
-              browse listings, filter by category, view seller trust signals,
-              and simulate publishing an item for sale.
+            <p class="eyebrow" data-i18n="heroEyebrow">Campus and local resale prototype</p>
+            <h1 data-i18n="heroTitle">Buy and sell second-hand items with less friction.</h1>
+            <p class="hero-text" data-i18n="heroText">
+              A finished web prototype for a Xianyu-style marketplace. Users can browse listings,
+              filter by category, view seller trust signals, and simulate publishing an item for sale.
             </p>
             <div class="hero-actions">
-              <a class="primary-button" href="#browse">Explore Listings</a>
-              <a class="secondary-button" href="#sell">Publish Demo Item</a>
+              <a class="primary-button" href="#browse" data-i18n="heroActionExplore">Explore Listings</a>
+              <a class="secondary-button" href="#sell" data-i18n="heroActionPublish">Publish Demo Item</a>
             </div>
             <ul class="hero-stats">
-              <li><strong>240+</strong><span>active listings</span></li>
-              <li><strong>91%</strong><span>same-day replies</span></li>
-              <li><strong>4.8/5</strong><span>seller reputation</span></li>
+              <li><strong>240+</strong><span data-i18n="statListings">active listings</span></li>
+              <li><strong>91%</strong><span data-i18n="statReply">same-day replies</span></li>
+              <li><strong>4.8/5</strong><span data-i18n="statReputation">seller reputation</span></li>
             </ul>
           </div>
           <div class="hero-panel">
             <div class="floating-card accent-card">
-              <span>Trending</span>
-              <strong>Used iPad Air</strong>
-              <small>¥1,850 • 2 hours ago</small>
+              <span data-i18n="trendingLabel">Trending</span>
+              <strong data-i18n="trendingTitle">Used iPad Air</strong>
+              <small data-i18n="trendingMeta">¥1,850 • 2 hours ago</small>
             </div>
             <div class="market-window">
               <div class="window-top">
@@ -57,40 +65,55 @@
               </div>
               <div class="window-body">
                 <div class="mini-map">
-                  <div class="map-chip">Electronics</div>
-                  <div class="map-chip">Furniture</div>
-                  <div class="map-chip">Books</div>
+                  <div class="map-chip" data-i18n="catElectronics">Electronics</div>
+                  <div class="map-chip" data-i18n="catFurniture">Furniture</div>
+                  <div class="map-chip" data-i18n="catBooks">Books</div>
                 </div>
                 <div class="mini-listing">
                   <div class="mini-image"></div>
                   <div>
-                    <p>Dorm pickup available</p>
-                    <strong>Gaming Chair</strong>
-                    <small>Condition: lightly used</small>
+                    <p data-i18n="miniPickup">Dorm pickup available</p>
+                    <strong data-i18n="miniTitle">Gaming Chair</strong>
+                    <small data-i18n="miniCondition">Condition: lightly used</small>
                   </div>
                 </div>
                 <div class="mini-badge-row">
-                  <span>Verified student</span>
-                  <span>Price negotiable</span>
-                  <span>Safe meetup</span>
+                  <span data-i18n="miniBadgeVerified">Verified student</span>
+                  <span data-i18n="miniBadgeNegotiable">Price negotiable</span>
+                  <span data-i18n="miniBadgeSafe">Safe meetup</span>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
+        <section class="feature-strip">
+          <article>
+            <h3 data-i18n="feature1Title">Smart discovery</h3>
+            <p data-i18n="feature1Text">Search and filter listings by keywords and category in one flow.</p>
+          </article>
+          <article>
+            <h3 data-i18n="feature2Title">Trust first</h3>
+            <p data-i18n="feature2Text">Built-in seller badges and meetup suggestions help reduce risk.</p>
+          </article>
+          <article>
+            <h3 data-i18n="feature3Title">Quick publish</h3>
+            <p data-i18n="feature3Text">Post a demo listing in seconds and see it appear instantly in feed.</p>
+          </article>
+        </section>
+
         <section class="filter-bar" id="browse">
           <div class="search-panel">
-            <label for="search">Search items</label>
-            <input id="search" type="search" placeholder="Search for laptop, desk, bike..." />
+            <label for="search" data-i18n="searchLabel">Search items</label>
+            <input id="search" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="Search for laptop, desk, bike..." />
           </div>
           <div class="chips" id="categoryChips"></div>
           <div class="sort-panel">
-            <label for="sort">Sort by</label>
+            <label for="sort" data-i18n="sortLabel">Sort by</label>
             <select id="sort">
-              <option value="latest">Latest</option>
-              <option value="low">Price: Low to High</option>
-              <option value="high">Price: High to Low</option>
+              <option value="latest" data-i18n="sortLatest">Latest</option>
+              <option value="low" data-i18n="sortLow">Price: Low to High</option>
+              <option value="high" data-i18n="sortHigh">Price: High to Low</option>
             </select>
           </div>
         </section>
@@ -99,57 +122,52 @@
           <div class="listing-zone">
             <div class="section-heading">
               <div>
-                <p class="eyebrow">Marketplace feed</p>
-                <h2>Fresh listings</h2>
+                <p class="eyebrow" data-i18n="feedEyebrow">Marketplace feed</p>
+                <h2 data-i18n="feedTitle">Fresh listings</h2>
               </div>
-              <button class="ghost-button small">Saved searches</button>
+              <button class="ghost-button small" data-i18n="savedSearches">Saved searches</button>
             </div>
             <div class="listing-grid" id="listingGrid"></div>
           </div>
 
           <aside class="side-rail">
             <section class="trust-card" id="trust">
-              <p class="eyebrow">Trust and safety</p>
-              <h3>Built for lower-risk trades</h3>
+              <p class="eyebrow" data-i18n="trustEyebrow">Trust and safety</p>
+              <h3 data-i18n="trustTitle">Built for lower-risk trades</h3>
               <ul>
-                <li>Seller badges for verified student accounts</li>
-                <li>Meetup suggestions in staffed campus locations</li>
-                <li>Condition labels and quick dispute notes</li>
+                <li data-i18n="trustItem1">Seller badges for verified student accounts</li>
+                <li data-i18n="trustItem2">Meetup suggestions in staffed campus locations</li>
+                <li data-i18n="trustItem3">Condition labels and quick dispute notes</li>
               </ul>
             </section>
 
             <section class="sell-card" id="sell">
-              <p class="eyebrow">Quick publish</p>
-              <h3>Post a demo listing</h3>
+              <p class="eyebrow" data-i18n="sellEyebrow">Quick publish</p>
+              <h3 data-i18n="sellTitle">Post a demo listing</h3>
               <form id="sellForm">
                 <label>
-                  Item title
-                  <input name="title" type="text" placeholder="e.g. Sony Headphones" required />
+                  <span data-i18n="fieldTitle">Item title</span>
+                  <input name="title" type="text" data-i18n-placeholder="titlePlaceholder" placeholder="e.g. Sony Headphones" required />
                 </label>
                 <label>
-                  Price (¥)
+                  <span data-i18n="fieldPrice">Price (¥)</span>
                   <input name="price" type="number" min="1" placeholder="300" required />
                 </label>
                 <label>
-                  Category
+                  <span data-i18n="fieldCategory">Category</span>
                   <select name="category">
-                    <option>Electronics</option>
-                    <option>Furniture</option>
-                    <option>Books</option>
-                    <option>Fashion</option>
-                    <option>Sports</option>
+                    <option data-i18n="catElectronics">Electronics</option>
+                    <option data-i18n="catFurniture">Furniture</option>
+                    <option data-i18n="catBooks">Books</option>
+                    <option data-i18n="catFashion">Fashion</option>
+                    <option data-i18n="catSports">Sports</option>
                   </select>
                 </label>
                 <label>
-                  Description
-                  <textarea
-                    name="description"
-                    rows="4"
-                    placeholder="State condition, pickup location, and whether the price is negotiable."
-                    required
-                  ></textarea>
+                  <span data-i18n="fieldDescription">Description</span>
+                  <textarea name="description" rows="4" data-i18n-placeholder="descriptionPlaceholder" placeholder="State condition, pickup location, and whether the price is negotiable." required></textarea>
                 </label>
-                <button class="primary-button form-button" type="submit">Publish Listing</button>
+                <button class="primary-button form-button" type="submit" data-i18n="publishButton">Publish Listing</button>
               </form>
               <p id="formFeedback" class="form-feedback" aria-live="polite"></p>
             </section>
@@ -159,36 +177,76 @@
         <section class="report-fit" id="report">
           <div class="section-heading">
             <div>
-              <p class="eyebrow">Project scope</p>
-              <h2>What this prototype demonstrates</h2>
+              <p class="eyebrow" data-i18n="scopeEyebrow">Project scope</p>
+              <h2 data-i18n="scopeTitle">What this prototype demonstrates</h2>
             </div>
           </div>
           <div class="fit-grid">
             <article>
-              <h3>Functional requirements</h3>
-              <p>
-                Product browsing, search, category filtering, listing cards,
-                seller information, and listing submission flow.
-              </p>
+              <h3 data-i18n="fit1Title">Functional requirements</h3>
+              <p data-i18n="fit1Text">Product browsing, search, category filtering, listing cards, seller information, and listing submission flow.</p>
             </article>
             <article>
-              <h3>Non-functional requirements</h3>
-              <p>
-                Responsive layout, readable UI, clear visual hierarchy, and
-                maintainable front-end structure.
-              </p>
+              <h3 data-i18n="fit2Title">Non-functional requirements</h3>
+              <p data-i18n="fit2Text">Responsive layout, readable UI, clear visual hierarchy, and maintainable front-end structure.</p>
             </article>
             <article>
-              <h3>Evaluation-ready features</h3>
-              <p>
-                Interactive components, realistic marketplace content, and an
-                interface that can be shown directly in a defense or demo.
-              </p>
+              <h3 data-i18n="fit3Title">Evaluation-ready features</h3>
+              <p data-i18n="fit3Text">Interactive components, realistic marketplace content, and an interface ready for showcase.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="report-fit" id="faq">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow" data-i18n="faqEyebrow">Need help?</p>
+              <h2 data-i18n="faqTitle">Frequently asked questions</h2>
+            </div>
+          </div>
+          <div class="fit-grid faq-grid">
+            <article>
+              <h3 data-i18n="faq1Q">Do I need a real account?</h3>
+              <p data-i18n="faq1A">No. Registration and login are local demo features stored in this browser only.</p>
+            </article>
+            <article>
+              <h3 data-i18n="faq2Q">Will listings be uploaded to server?</h3>
+              <p data-i18n="faq2A">No. Demo listings are stored only in memory and reset on page refresh.</p>
+            </article>
+            <article>
+              <h3 data-i18n="faq3Q">How does language switching work?</h3>
+              <p data-i18n="faq3A">Use the language switcher in the top bar to toggle between English and Chinese instantly.</p>
             </article>
           </div>
         </section>
       </main>
+
+      <footer class="site-footer">
+        <p data-i18n="footerText">LoopMart prototype · Built for interaction demo and architecture showcase.</p>
+      </footer>
     </div>
+
+    <dialog id="authModal" class="auth-modal">
+      <form method="dialog" class="auth-modal-shell" id="authFormShell">
+        <div class="auth-header">
+          <h3 id="authTitle" data-i18n="authTitleLogin">Sign in to LoopMart</h3>
+          <button class="ghost-button small" id="closeAuthModal" data-i18n="close">Close</button>
+        </div>
+        <label>
+          <span data-i18n="authEmail">Email</span>
+          <input id="authEmail" type="email" required placeholder="you@example.com" />
+        </label>
+        <label>
+          <span data-i18n="authPassword">Password</span>
+          <input id="authPassword" type="password" minlength="6" required placeholder="******" />
+        </label>
+        <p id="authFeedback" class="form-feedback" aria-live="polite"></p>
+        <div class="auth-actions">
+          <button type="button" id="authSubmit" class="primary-button" data-i18n="authSignInAction">Sign In</button>
+          <button type="button" id="authModeToggle" class="secondary-button" data-i18n="authSwitchToRegister">No account? Register</button>
+        </div>
+      </form>
+    </dialog>
 
     <template id="listingTemplate">
       <article class="listing-card">
@@ -205,7 +263,7 @@
               <strong class="listing-price"></strong>
               <small class="listing-seller"></small>
             </div>
-            <button class="secondary-button card-button" type="button">View</button>
+            <button class="secondary-button card-button" type="button" data-i18n="viewButton">View</button>
           </div>
         </div>
       </article>

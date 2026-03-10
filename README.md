@@ -4,7 +4,7 @@ This is a finished front-end prototype for a second-hand goods marketplace simil
 
 ## Open locally
 
-Open [index.html](/Users/nihao/Documents/Playground/marketplace-web/index.html) in a browser.
+Open [index.html](./index.html) in a browser.
 
 ## Included interactions
 
