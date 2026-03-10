@@ -69,6 +69,25 @@ const formFeedback = document.querySelector("#formFeedback");
 let activeCategory = "All";
 let dynamicListings = [...listings];
 
+function isPageReady() {
+  const requiredElements = [
+    categoryChips,
+    listingGrid,
+    searchInput,
+    sortSelect,
+    template,
+    sellForm,
+    formFeedback,
+  ];
+
+  return requiredElements.every(Boolean);
+}
+
+function getFieldValue(formData, key) {
+  const value = formData.get(key);
+  return typeof value === "string" ? value.trim() : "";
+}
+
 function renderCategoryChips() {
   categoryChips.innerHTML = "";
 
@@ -140,10 +159,10 @@ function renderListings() {
 function handlePublish(event) {
   event.preventDefault();
   const formData = new FormData(sellForm);
-  const title = formData.get("title").toString().trim();
+  const title = getFieldValue(formData, "title");
   const price = Number(formData.get("price"));
-  const category = formData.get("category").toString();
-  const description = formData.get("description").toString().trim();
+  const category = getFieldValue(formData, "category");
+  const description = getFieldValue(formData, "description");
 
   if (!title || !description || Number.isNaN(price) || price <= 0) {
     formFeedback.textContent = "Please complete all fields with valid values.";
@@ -166,9 +185,13 @@ function handlePublish(event) {
   renderListings();
 }
 
-searchInput.addEventListener("input", renderListings);
-sortSelect.addEventListener("change", renderListings);
-sellForm.addEventListener("submit", handlePublish);
+if (isPageReady()) {
+  searchInput.addEventListener("input", renderListings);
+  sortSelect.addEventListener("change", renderListings);
+  sellForm.addEventListener("submit", handlePublish);
 
-renderCategoryChips();
-renderListings();
+  renderCategoryChips();
+  renderListings();
+} else {
+  console.error("LoopMart initialization failed: required DOM nodes are missing.");
+}
